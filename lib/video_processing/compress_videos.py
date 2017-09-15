@@ -27,7 +27,7 @@ with tf.Session() as sess:
         n_frames = int(video_reader.get(7))
         # 1 second in OpenCV VideoCapture method would take 25 frames (?)
         # Im fine sampling frames every 0.2 seconds
-        sampled_indices = range(0, n_frames - 1, 500)
+        sampled_indices = range(0, n_frames - 1, 5)
         compressed_file = np.zeros((len(sampled_indices) - 1, COMPRESSION_SIZE))
 
         # Lame syntax on OpenCV side: 1th parameter is pointer location in the video
@@ -36,7 +36,6 @@ with tf.Session() as sess:
         _, current_frame = video_reader.read()
         current_frame = cv2.resize(current_frame, tuple(IMAGE_SHAPE[:2]))
 
-        print compressed_file.shape
         for i in range(1, len(sampled_indices)):
             # Updated the current frame
             previous_frame = current_frame
@@ -57,4 +56,3 @@ with tf.Session() as sess:
         filename = file.split("/")[-1][:-4]
         output_path = "../../data/processed_video/" + filename + ".txt"
         np.savetxt(output_path, compressed_file)
-
