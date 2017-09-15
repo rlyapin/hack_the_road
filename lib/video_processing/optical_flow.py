@@ -3,7 +3,7 @@
 import cv2 
 import numpy as np
 
-def optical_flow(frame1, frame2) 
+def optical_flow(frame1, frame2):
     frame1_map = cv2.cvtColor(frame1,cv2.COLOR_BGR2GRAY)
     frame2_map = cv2.cvtColor(frame2,cv2.COLOR_BGR2GRAY)
 
