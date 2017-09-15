@@ -11,7 +11,7 @@ import glob
 import numpy as np
 import random
 
-MAX_SEQUENCE_LENGTH = 50
+MAX_SEQUENCE_LENGTH = 25
 COMPRESSION_SIZE = 51
 
 def single_sequence_generator():

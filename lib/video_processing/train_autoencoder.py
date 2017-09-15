@@ -14,7 +14,7 @@ with tf.Session() as sess:
     encoder_model = FrameAutoencoder(session=sess, learning_rate=0.1)
     saver = TfSaver('../../data/models/autoencoder_folder')
 
-    # saver.load_latest_checkpoint(sess)
+    saver.load_latest_checkpoint(sess)
 
     print "Loss before training"
     print encoder_model.loss(next(frame_generator))

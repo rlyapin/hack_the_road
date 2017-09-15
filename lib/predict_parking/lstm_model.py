@@ -9,7 +9,7 @@ from tf_saver import TfSaver
 # MAX_SEQUENCE_LENGTH: we take 0.2s break between for frames and ~10s seconds clips for prediction
 # NUM_HIDDEN is the dimensionality of hidden lstm layer
 COMPRESSION_SIZE = 51
-MAX_SEQUENCE_LENGTH = 50
+MAX_SEQUENCE_LENGTH = 25
 NUM_HIDDEN = 25
 
 class LSTMClassifier:
