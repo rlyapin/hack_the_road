@@ -21,12 +21,12 @@ class LSTMClassifier:
 
         # Getting a sequence of frames to process
         # Note that here it is implied these frames are already compressed into smaller vector
-        self.frames = tf.placeholder("float", shape=[None, MAX_SEQUENCE_LENGTH, COMPRESSION_SIZE])
-        self.labels = tf.placeholder("float", shape=[None, 1])
+        self.frames = tf.placeholder(shape=[None, MAX_SEQUENCE_LENGTH, COMPRESSION_SIZE], dtype=tf.float32)
+        self.labels = tf.placeholder(shape=[None, 1], dtype=tf.int32)
 
         # Getting LSTM output
         lstm_cell = tf.contrib.rnn.BasicLSTMCell(NUM_HIDDEN)
-        output, _ = tf.nn.dynamic_rnn(lstm_cell, self.frames)
+        output, _ = tf.nn.dynamic_rnn(lstm_cell, self.frames, dtype=tf.float32)
         final_lstm_state = output[:, -1, :]
 
         # Getting the probabilities of parking
@@ -35,7 +35,7 @@ class LSTMClassifier:
 
         # Defining prediction loss
         one_hot_labels = tf.one_hot(self.labels, depth=2, on_value=0.0, off_value=1.0)
-        self.pred_loss = tf.nn.softmax_cross_entropy_with_logits(labels=one_hot_labels, logits=self.prob_layer)
+        self.pred_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=one_hot_labels, logits=self.prob_layer))
         self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.pred_loss)
 
         self.session.run(tf.global_variables_initializer())
@@ -43,8 +43,8 @@ class LSTMClassifier:
     def predict(self, frames):
         return self.session.run(self.prob_layer, feed_dict={self.frames: frames})
 
-    def loss(self, frames):
-        return self.session.run(self.pred_loss, feed_dict={self.frames: frames})
+    def loss(self, frames, labels):
+        return self.session.run(self.pred_loss, feed_dict={self.frames: frames, self.labels: labels})
 
-    def train_op(self, frames):
-        self.session.run(self.optimizer, feed_dict={self.frames: frames})
+    def train_op(self, frames, labels):
+        self.session.run(self.optimizer, feed_dict={self.frames: frames, self.labels: labels})
