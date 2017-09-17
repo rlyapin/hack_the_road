@@ -1,4 +1,4 @@
-# The code that takes creates the generator that produces all .mp4 files in data/video
+# The code that takes creates the generator that produces frames from .mp4 files in data/video
 
 import os
 import cv2
