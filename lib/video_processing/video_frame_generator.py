@@ -33,8 +33,8 @@ def batch_frame_generator(batch_size):
             generated_frames[i, :, :, :] = next(frame_generator)
         yield generated_frames
 
-def random_frame_generator(batch_size):
-    all_files = glob.glob("../../data/video/*.mp4")
+def random_frame_generator(video_dir):
+    all_files = glob.glob(video_dir + "*.mp4")
     while True:
         picked_file = random.choice(all_files)
         video_reader = cv2.VideoCapture(picked_file)
