@@ -5,6 +5,7 @@ import cv2
 import glob
 import random
 import numpy as np
+from image_processing import process_image
 
 IMAGE_SHAPE = [224, 224, 3]
 
@@ -22,8 +23,7 @@ def single_frame_generator():
                 video_reader.set(1, index)
                 bool_flag, frame = video_reader.read()
                 if bool_flag == True:
-                    frame = cv2.resize(frame, tuple(IMAGE_SHAPE[:2]))
-                    yield frame
+                    yield process_image(frame)
         
 def batch_frame_generator(batch_size):
     frame_generator = single_frame_generator()
@@ -44,4 +44,4 @@ def random_frame_generator(video_dir):
         # Lame syntax on OpenCV side: 1th parameter is pointer location in the video
         video_reader.set(1, picked_frame)
         _, random_frame = video_reader.read()  
-        yield cv2.resize(random_frame, tuple(IMAGE_SHAPE[:2]))      
+        yield process_image(random_frame)   

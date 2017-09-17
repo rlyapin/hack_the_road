@@ -9,6 +9,7 @@ import glob
 from tf_saver import TfSaver
 from autoencoder import FrameAutoencoder
 from optical_flow import optical_flow
+from image_processing import process_image
 
 # Currently compression size is: 49 entries for autoencoder and 2 entries for optical flow
 IMAGE_SHAPE = [224, 224, 3]
@@ -44,7 +45,8 @@ with tf.Session() as sess:
             current_frame = cv2.resize(current_frame, tuple(IMAGE_SHAPE[:2]))
 
             # Getting frame embedding from autoencoder
-            compressed_file[i - 1, :COMPRESSION_SIZE-2] = encoder_model.compress(np.expand_dims(current_frame, axis=0))
+            compressed_file[i - 1, :COMPRESSION_SIZE-2] = /
+            encoder_model.compress(np.expand_dims(process_image(current_frame), axis=0))
 
             # Getting information about optical flow
             mag, ang = optical_flow(previous_frame, current_frame)
