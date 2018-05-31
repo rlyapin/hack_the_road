@@ -17,7 +17,7 @@ COMPRESSION_SIZE = 51
 
 with tf.Session() as sess:
     # Loading trained autoencoder
-    encoder_model = FrameAutoencoder(session=sess, learning_rate=0.1)
+    encoder_model = FrameAutoencoder(session=sess, learning_rate=0.001)
     saver = TfSaver('../../data/models/autoencoder_folder')
     saver.load_latest_checkpoint(sess)
 
